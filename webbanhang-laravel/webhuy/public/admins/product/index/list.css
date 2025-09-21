@@ -1,0 +1,10 @@
+.product_image_150_100{
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+}
+.product_order_image_150_100{
+    width: 120px;
+    height: 80px;
+
+}
