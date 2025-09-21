@@ -1,0 +1,35 @@
+# Ignore dependencies and build artifacts
+vendor/
+node_modules/
+
+# Laravel environment
+.env
+.env.*
+!.env.example
+storage/*.key
+
+# Laravel generated files
+bootstrap/cache/*.php
+storage/logs/*.log
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/testing/*
+storage/framework/views/*
+storage/debugbar/*
+public/storage
+
+# IDE & OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Testing & tooling caches
+.phpunit.result.cache
+.php-cs-fixer.cache
+npm-debug.log*
+yarn-error.log*
+
+# Homestead/Vagrant
+Homestead.yaml
+Homestead.json
