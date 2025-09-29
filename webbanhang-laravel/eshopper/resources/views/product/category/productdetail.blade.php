@@ -49,7 +49,7 @@
                 <div class="wrapper row">
                     <div class="preview col-md-6">
                         <div class="preview-pic tab-content">
-                            <div class="tab-pane active" id="pic-1"><img src="{{ config('app.base_url') . $product->feature_image_path }}" alt="" /></div>
+                            <div class="tab-pane active" id="pic-1"><img src="{{ $product->feature_image_path ? url('http://127.0.0.1:8001' . $product->feature_image_path) : asset('Eshopper/images/home/product1.jpg') }}" alt="{{ $product->name }}" /></div>
                             @foreach($product->images as $index => $image)
                                 <div class="tab-pane" id="pic-{{ $index + 2 }}"><img src="{{ config('app.base_url') . $image->image_path }}" alt="" /></div>
                             @endforeach

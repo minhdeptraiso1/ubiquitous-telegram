@@ -16,9 +16,17 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // Seed a default admin user
+        // Seed all data
         $this->call([
             AdminUserSeeder::class,
+            UserSeeder::class,
+            CategorySeeder::class,
+            ProductSeeder::class,
+            ProductImageSeeder::class,
+            SliderSeeder::class,
+            CustomerSeeder::class,
+            OrderSeeder::class,
+            MenuSeeder::class,
         ]);
     }
 }

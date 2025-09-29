@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes; // Import trait SoftDeletes
 class Slider extends Model
 {
     use SoftDeletes; // Sử dụng trait SoftDeletes
-
-    protected $table = "sliders";
+    
+    protected $connection = 'shared'; // Sử dụng connection shared với prefix wh_
+    protected $table = "sliders"; // Sử dụng bảng sliders chung
 }

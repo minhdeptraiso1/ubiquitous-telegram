@@ -9,6 +9,8 @@ use App\Models\OrderItem;
 class Order extends Model
 {
     use HasFactory;
+    protected $connection = 'shared'; // Sử dụng connection shared với prefix wh_
+    protected $table = "orders"; // Tên bảng không prefix
 
     protected $fillable = ['user_id', 'customer_id', 'status', 'total_price','payment_status', 'payment_method'];
 
@@ -17,7 +19,7 @@ class Order extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function Orderitems()
+    public function orderItems() // Tên chuẩn
     {
         return $this->hasMany(Order_Item::class);
     }

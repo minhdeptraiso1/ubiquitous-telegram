@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     use HasFactory;
+    protected $connection = 'shared'; // Sử dụng connection shared với prefix wh_
+    protected $table = "customers"; // Tên bảng không prefix
 
     protected $fillable = ['user_id', 'name', 'address', 'phone'];
 

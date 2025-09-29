@@ -15,6 +15,9 @@ class Order extends Model
         'status',
         'total_price',
         'customer_id', // Thêm khóa ngoại của khách hàng
+        'user_id', // Thêm user_id
+        'payment_status', // Thêm trạng thái thanh toán
+        'payment_method', // Thêm phương thức thanh toán
     ];
 
     public static function getStatuses()
@@ -32,6 +35,12 @@ class Order extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    // Mối quan hệ với user
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     // Mối quan hệ với các mặt hàng trong đơn hàng

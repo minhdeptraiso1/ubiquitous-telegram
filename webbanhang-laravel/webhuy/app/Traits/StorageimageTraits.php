@@ -11,9 +11,19 @@ trait StorageimageTraits
     {
         if ($request->hasFile($fieldName)) {
             $file = $request->file($fieldName);
+            
+            // Kiểm tra file có hợp lệ không
+            if (!$file->isValid()) {
+                throw new \Exception('File upload không hợp lệ');
+            }
+            
             $fileNameOrigin = $file->getClientOriginalName();
             $fileNameHash = Str::random(20) . '.' . $file->getClientOriginalExtension();
-            $filePath = $request->file($fieldName)->storeAs('public/product/' . $foderName . '/' . auth()->id(), $fileNameHash);
+            
+            // Tạo thư mục nếu chưa tồn tại
+            $folder = 'public/product/' . $foderName . '/' . auth()->id();
+            
+            $filePath = $request->file($fieldName)->storeAs($folder, $fileNameHash);
             $dataUploadTrait = [
                 'file_name' => $fileNameOrigin,
                 'file_path' => Storage::url($filePath)
@@ -25,13 +35,22 @@ trait StorageimageTraits
 
     public function storageTraitUploadMutiple( $file, $foderName)
     {
-            $fileNameOrigin = $file->getClientOriginalName();
-            $fileNameHash = Str::random(20) . '.' . $file->getClientOriginalExtension();
-            $filePath = $file->storeAs('public/' . $foderName . '/' . auth()->id(), $fileNameHash);
-            $dataUploadTrait = [
-                'file_name' => $fileNameOrigin,
-                'file_path' => Storage::url($filePath)
-            ];
-            return $dataUploadTrait;
+        // Kiểm tra file có hợp lệ không
+        if (!$file->isValid()) {
+            throw new \Exception('File upload không hợp lệ: ' . $file->getClientOriginalName());
         }
+        
+        $fileNameOrigin = $file->getClientOriginalName();
+        $fileNameHash = Str::random(20) . '.' . $file->getClientOriginalExtension();
+        
+        // Tạo thư mục nếu chưa tồn tại  
+        $folder = 'public/' . $foderName . '/' . auth()->id();
+        
+        $filePath = $file->storeAs($folder, $fileNameHash);
+        $dataUploadTrait = [
+            'file_name' => $fileNameOrigin,
+            'file_path' => Storage::url($filePath)
+        ];
+        return $dataUploadTrait;
+    }
     }

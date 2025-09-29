@@ -21,6 +21,9 @@
     </li>
     <li><a href="{{ route('shopingcart.cart') }}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
     <li><a href="{{ route('shopingcart.punchorder') }}"><i class="fa fa-shopping-cart"></i> Đơn đã mua</a></li>
+    @if(Auth::check())
+    <li><a href="{{ route('export.user.data') }}"><i class="fa fa-download"></i> Export Data</a></li>
+    @endif
     <li>
         @if(Auth::check())
             <a href="{{ route('logout') }}"><i class="fa fa-lock"></i> Logout</a>

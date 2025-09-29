@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Category extends Model
 {
     use SoftDeletes;
-    protected $table = "categories";
+    protected $connection = 'shared'; // Sử dụng connection shared với prefix wh_
+    protected $table = "categories"; // Tên bảng không prefix
     public function categoryChildrent(){
         return $this->hasMany(Category::class, 'parent_id');
     }

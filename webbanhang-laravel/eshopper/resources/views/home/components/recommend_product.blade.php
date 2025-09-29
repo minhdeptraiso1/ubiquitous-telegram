@@ -13,7 +13,7 @@
                                         <div class="single-products">
                                             
                                             <div class="productinfo text-center">
-                                                <a href="{{ route('product.category.productdetail', ['id' => $productsRecomend[$j]->id]) }}"><img src="{{config('app.base_url') . $productsRecomend[$j]->feature_image_path}}" alt="" /></a>
+                                                <a href="{{ route('product.category.productdetail', ['id' => $productsRecomend[$j]->id]) }}"><img src="{{ $productsRecomend[$j]->feature_image_path ? url('http://127.0.0.1:8001' . $productsRecomend[$j]->feature_image_path) : asset('Eshopper/images/home/product1.jpg') }}" alt="{{ $productsRecomend[$j]->name }}" /></a>
                                                 <h2>{{ number_format($productsRecomend[$j]->price) }}</h2>
                                                 <p>{{ $productsRecomend[$j]->name }}</p>
                                                 <a href="#" onclick="Addcart({{$productsRecomend[$j]->id}}); return false;" class="btn btn-default add-to-cart">

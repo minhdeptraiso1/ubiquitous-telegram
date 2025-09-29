@@ -17,7 +17,7 @@ $baseUrl =config('app.base_url');
                         @foreach($sliders as $key => $slider)
                             <div class="item{{ $key == 0 ? ' active' : '' }}">
                                 <div class="col-sm-6">
-                                    <h1><span>HNV</span>-SHOPPER</h1>
+                                    <h1><span>Phạm Văn Thiết </span>-Smart Phone </h1>
                                     <h2>{{ $slider->name }}</h2>
                                     <p>{{ $slider->description }}</p>
                                 </div>

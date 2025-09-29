@@ -40,13 +40,25 @@
                         <form id="login-form" class="form" action="" method="post">
                             @csrf
                             <h3 class="text-center text-info">Login</h3>
+                            
+                            <!-- Display validation errors -->
+                            @if($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul class="mb-0">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
                             <div class="form-group">
                                 <label for="username" class="text-info">Email:</label><br>
-                                <input type="text" name="email" id="email" class="form-control">
+                                <input type="text" name="email" id="email" class="form-control" value="{{ old('email') }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="text-info">Password:</label><br>
-                                <input type="password" name="password" id="password" class="form-control">
+                                <input type="password" name="password" id="password" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>

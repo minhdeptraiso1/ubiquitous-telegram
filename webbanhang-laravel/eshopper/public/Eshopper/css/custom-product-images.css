@@ -1,0 +1,117 @@
+/* Custom CSS for E-commerce Image Sizes */
+
+/* Product images in listings */
+.product-image-wrapper img,
+.single-products img,
+.productinfo img {
+    width: 180px !important;
+    height: 200px !important;
+    object-fit: cover !important;
+    border-radius: 4px;
+    transition: transform 0.3s ease;
+}
+
+.product-image-wrapper img:hover {
+    transform: scale(1.05);
+}
+
+/* Cart page images */
+.cart_product img,
+.image_size {
+    width: 100px !important;
+    height: 80px !important;
+    object-fit: cover !important;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* Product detail page main image */
+.preview-pic img {
+    width: 100% !important;
+    max-width: 400px !important;
+    height: 400px !important;
+    object-fit: cover !important;
+    border-radius: 8px;
+}
+
+/* Thumbnail images */
+.preview-thumbnail img {
+    width: 60px !important;
+    height: 60px !important;
+    object-fit: cover !important;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+
+.preview-thumbnail .active img,
+.preview-thumbnail img:hover {
+    border-color: #fe980f;
+}
+
+/* Recommended products carousel */
+.recommended_items img {
+    width: 180px !important;
+    height: 180px !important;
+    object-fit: cover !important;
+    border-radius: 4px;
+}
+
+/* Order history images */
+.product_order_image_150_100 {
+    width: 80px !important;
+    height: 60px !important;
+    object-fit: cover !important;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* Feature products on homepage */
+.features_items .productinfo img {
+    width: 180px !important;
+    height: 200px !important;
+    object-fit: cover !important;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* Category product listings */
+.product-image-wrapper {
+    overflow: hidden;
+    border-radius: 4px;
+    position: relative;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .product-image-wrapper img,
+    .single-products img,
+    .productinfo img {
+        width: 150px !important;
+        height: 170px !important;
+    }
+
+    .features_items .productinfo img {
+        width: 150px !important;
+        height: 170px !important;
+    }
+
+    .preview-pic img {
+        height: 300px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-image-wrapper img,
+    .single-products img,
+    .productinfo img {
+        width: 120px !important;
+        height: 140px !important;
+    }
+
+    .cart_product img,
+    .image_size {
+        width: 80px !important;
+        height: 64px !important;
+    }
+}

@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     use SoftDeletes;
-    protected $table = "products";
+    protected $connection = 'shared'; // Sử dụng connection shared với prefix wh_
+    protected $table = "products"; // Tên bảng không prefix, connection sẽ thêm wh_
 
     public function images()
     {

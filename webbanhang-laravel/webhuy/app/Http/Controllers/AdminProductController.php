@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Components\Recusive;
 use App\Http\Requests\ProductAddRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
@@ -95,6 +96,12 @@ class AdminProductController extends Controller
     public function store(ProductAddRequest $request){
         try{
             DB::beginTransaction();
+            
+            // Kiểm tra user đã đăng nhập
+            if (!auth()->check()) {
+                return redirect()->back()->with('error', 'Bạn cần đăng nhập để thực hiện chức năng này');
+            }
+            
             $dataProductCreate = [
                 'name' =>$request->name,
                 'price' =>$request->price,
@@ -109,56 +116,89 @@ class AdminProductController extends Controller
                 $dataProductCreate['feature_image_name'] = $dataUploadFeatureImage['file_name'];
                 $dataProductCreate['feature_image_path'] = $dataUploadFeatureImage['file_path'];
            }
+           
            $product = $this->product->create( $dataProductCreate );
-           //inser
+           
+           // Upload multiple images
            if($request->hasFile('image_path')){
                 foreach ($request->image_path as $fileItem){
                     $dataProductImageDetail = $this-> storageTraitUploadMutiple( $fileItem, 'product' );
                     $product->images()->create([
                         'image_path'=>$dataProductImageDetail['file_path'],
                         'image_name'=>$dataProductImageDetail['file_name'],
-        
                     ]);
                 }
            }
+           
         DB::commit();
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('success', 'Thêm sản phẩm thành công!');
+        
        } catch(Exception $exception){
            DB::rollBack();
-           Log::error('Message' . $exception->getMessage() . 'Line' . $exception->getLine());
+           Log::error('Message: ' . $exception->getMessage() . ' --- Line: ' . $exception->getLine());
+           return redirect()->back()
+                          ->withInput()
+                          ->with('error', 'Có lỗi xảy ra khi thêm sản phẩm: ' . $exception->getMessage());
         }
    }
 
     public function edit($id){
-        $product = $this->product->find($id);
-        $htmlOption = $this->getCategory($product->category_id);
-        return view('admin.product.edit', compact('htmlOption', 'product'));
+        try {
+            $product = $this->product->find($id);
+            
+            if (!$product) {
+                return redirect()->route('product.index')->with('error', 'Sản phẩm không tồn tại');
+            }
+            
+            $htmlOption = $this->getCategory($product->category_id);
+            return view('admin.product.edit', compact('htmlOption', 'product'));
+            
+        } catch (Exception $exception) {
+            Log::error('Error in edit product: ' . $exception->getMessage() . ' --- Line: ' . $exception->getLine());
+            return redirect()->route('product.index')->with('error', 'Có lỗi xảy ra khi tải trang sửa sản phẩm');
+        }
     }
 
-    public function update(Request $request, $id){
+    public function update(ProductUpdateRequest $request, $id){
         try{
             DB::beginTransaction();
+            
+            // Kiểm tra user đã đăng nhập
+            if (!auth()->check()) {
+                return redirect()->back()->with('error', 'Bạn cần đăng nhập để thực hiện chức năng này');
+            }
+            
+            // Kiểm tra sản phẩm có tồn tại
+            $product = $this->product->find($id);
+            if (!$product) {
+                return redirect()->route('product.index')->with('error', 'Sản phẩm không tồn tại');
+            }
+            
             $dataProductUpdate = [
-                'name' =>$request->name,
-                'price' =>$request->price,
-                'quanty' =>$request->quanty,
-                'content' =>$request->contents,
-                'user_id' =>auth()->id(),
+                'name' => $request->name,
+                'price' => $request->price,
+                'quanty' => $request->quanty,
+                'content' => $request->contents,
+                'user_id' => auth()->id(),
                 'category_id' => $request->category_id,
             ];
     
-           $dataUploadFeatureImage=$this->storageTraitUpload($request, 'feature_image_path', 'product');
-           if(!empty($dataUploadFeatureImage)){
+            // Upload ảnh đại diện mới (nếu có)
+            $dataUploadFeatureImage = $this->storageTraitUpload($request, 'feature_image_path', 'product');
+            if(!empty($dataUploadFeatureImage)){
                 $dataProductUpdate['feature_image_name'] = $dataUploadFeatureImage['file_name'];
                 $dataProductUpdate['feature_image_path'] = $dataUploadFeatureImage['file_path'];
-           }
-           $this->product->find($id)->update($dataProductUpdate);
+            }
+            
+            // Cập nhật thông tin sản phẩm
+            $product->update($dataProductUpdate);
     
-           // Xóa hình ảnh sản phẩm cũ
-           $this->productImage->where('product_id', $id)->delete();
-    
-           // Thêm hình ảnh mới
-           if($request->hasFile('image_path')){
+            // Xử lý ảnh chi tiết: Chỉ xóa và thêm mới khi có upload ảnh mới
+            if($request->hasFile('image_path')){
+                // Xóa hình ảnh sản phẩm cũ
+                $this->productImage->where('product_id', $id)->delete();
+        
+                // Thêm hình ảnh mới
                 foreach ($request->image_path as $fileItem){
                     $dataProductImageDetail = $this->storageTraitUploadMutiple($fileItem, 'product');
                     ProductImage::create([
@@ -167,14 +207,18 @@ class AdminProductController extends Controller
                         'image_name' => $dataProductImageDetail['file_name'],
                     ]);
                 }
-           }
+            }
     
-           DB::commit();
-           return redirect()->route('product.index');
-       } catch(Exception $exception){
-           DB::rollBack();
-           Log::error('Message' . $exception->getMessage() . 'Line' . $exception->getLine());
-       }
+            DB::commit();
+            return redirect()->route('product.edit', $id)->with('success', 'Cập nhật sản phẩm thành công!');
+            
+        } catch(Exception $exception){
+            DB::rollBack();
+            Log::error('Error updating product: ' . $exception->getMessage() . ' --- Line: ' . $exception->getLine());
+            return redirect()->back()
+                           ->withInput()
+                           ->with('error', 'Có lỗi xảy ra khi cập nhật sản phẩm: ' . $exception->getMessage());
+        }
     }
     public function delete($id){
         try{

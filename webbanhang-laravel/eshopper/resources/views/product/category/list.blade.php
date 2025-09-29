@@ -93,7 +93,7 @@
                                 <div class="product-image-wrapper">
                                     <div class="single-products">
                                         <div class="productinfo text-center">
-                                            <a href="{{ route('product.category.productdetail', ['id' => $prd->id]) }}"><img src="{{ config('app.base_url') . $prd->feature_image_path }}" alt="{{ $prd->name }}" /></a>
+                                            <a href="{{ route('product.category.productdetail', ['id' => $prd->id]) }}"><img src="{{ $prd->feature_image_path ? url('http://127.0.0.1:8001' . $prd->feature_image_path) : asset('Eshopper/images/home/product1.jpg') }}" alt="{{ $prd->name }}" /></a>
                                             <h4 style="color: orange;">{{ number_format($prd->price) }} VND</h4>
                                             <p>{{ $prd->name }}</p>
                                             <a onclick="Addcart({{ $prd->id }})" href="javascript:" class="btn btn-default add-to-cart">

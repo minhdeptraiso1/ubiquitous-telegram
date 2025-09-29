@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class ProductImage extends Model
 {
     use HasFactory;
-    protected $table = "product_images";
+    protected $connection = 'shared'; // Sử dụng connection shared với prefix wh_
+    protected $table = "product_images"; // Tên bảng không prefix
 
     public function product()
     {

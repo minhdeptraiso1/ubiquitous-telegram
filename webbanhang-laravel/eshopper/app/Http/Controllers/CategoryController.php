@@ -19,7 +19,7 @@ class CategoryController extends Controller
     {
         $categorys = Category::where('parent_id', 0)->get();
         $product = Product::with('images')->findOrFail($id); // Load product with its images
-        $productsRecomend = Product::orderBy('views_count', 'desc')->take(12)->get();
+        $productsRecomend = Product::orderBy('views_count', 'desc')->take(12)->get(); // Khôi phục orderBy views_count
         $categorysLimit = Category::where('parent_id', 0)->take(3)->get();
         return view("product.category.productdetail", compact('categorys', 'product', 'productsRecomend', 'categorysLimit'));
     }

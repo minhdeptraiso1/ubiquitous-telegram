@@ -18,6 +18,27 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6">
+                
+                <!-- Hiển thị thông báo thành công -->
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
+                <!-- Hiển thị thông báo lỗi -->
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                
                 <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data">
               @csrf
     <div class="form-group">
@@ -51,20 +72,29 @@
 
     <div class="form-group">
         <label>Ảnh đại điện</label>
-    <input type="file" class="form-control-file" name="feature_image_path">
+        <input type="file" class="form-control-file @error('feature_image_path') is-invalid @enderror" name="feature_image_path">
+        @error('feature_image_path')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
     </div>
 
     <div class="form-group">
         <label>Ảnh chi tiết</label>
-        <input type="file" class="form-control-file" name="image_path[]" multiple>
+        <input type="file" class="form-control-file @error('image_path.*') is-invalid @enderror" name="image_path[]" multiple>
+        @error('image_path.*')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
     </div>
 
         <div class="form-group">
           <label>Chọn danh mục</label>
-          <select class="form-control select_mtk" name="category_id">
+          <select class="form-control select_mtk @error('category_id') is-invalid @enderror" name="category_id">
             <option value="0">Chọn danh mục</option>
           {!!$htmlOption!!}
           </select>
+          @error('category_id')
+          <div class="alert alert-danger">{{ $message }}</div>
+          @enderror
         </div>
 
         <div class="form-group">

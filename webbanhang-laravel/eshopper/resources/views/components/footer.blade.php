@@ -12,7 +12,7 @@
                 <p class="pull-left">Copyright © 2024 E-SHOPPER Inc. All rights reserved.</p>
             </div>
             <div class="col-md-6">
-                <p class="pull-right">HNV</p>
+                <p class="pull-right">Phạm Văn Thiết </p>
             </div>
         </div>
     </div>

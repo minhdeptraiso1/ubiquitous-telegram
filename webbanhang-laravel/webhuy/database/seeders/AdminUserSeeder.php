@@ -12,6 +12,15 @@ class AdminUserSeeder extends Seeder
     {
         // Create or update an admin user
         User::updateOrCreate(
+            ['email' => 'superadmin@webhuy.com'],
+            [
+                'name' => 'Super Administrator',
+                'password' => Hash::make('123456'),
+            ]
+        );
+
+        // Also create admin@example.com for backup
+        User::updateOrCreate(
             ['email' => 'admin@example.com'],
             [
                 'name' => 'Administrator',

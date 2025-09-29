@@ -11,6 +11,9 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    
+    protected $connection = 'shared'; // Sử dụng connection shared với prefix wh_
+    protected $table = "users"; // Sử dụng bảng users chung
 
     /**
      * The attributes that are mass assignable.

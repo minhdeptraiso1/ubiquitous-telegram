@@ -13,7 +13,7 @@ class HomeController extends Controller
         $sliders =Slider::latest()->get();
         $categorys =Category::where('parent_id',0)->get();
         $products =Product::latest()->take(6)->get();
-        $productsRecomend = Product::orderBy('views_count', 'desc')->take(12)->get();
+        $productsRecomend = Product::orderBy('views_count', 'desc')->take(12)->get(); // Khôi phục orderBy views_count
         $categorysLimit =Category::where('parent_id',0)->take(3)->get();
         return view('home.home', compact('sliders', 'categorys', 'products', 'productsRecomend', 'categorysLimit'));
     }

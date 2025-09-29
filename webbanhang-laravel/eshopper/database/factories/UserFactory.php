@@ -37,4 +37,19 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    /**
+     * Indicate that the model should be an admin.
+     *
+     * @return static
+     */
+    public function admin()
+    {
+        return $this->state(fn (array $attributes) => [
+            'name' => 'Administrator',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('admin123'),
+            'email_verified_at' => now(),
+        ]);
+    }
 }

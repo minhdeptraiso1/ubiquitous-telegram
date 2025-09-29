@@ -27,14 +27,14 @@ class CartController extends Controller
         $sliders = Slider::latest()->get();
         $categorys = Category::where('parent_id', 0)->get();
         $categorysLimit = Category::where('parent_id', 0)->take(3)->get();
-        $customer = Customer::where('user_id', Auth::id())->first();
+        $customer = Auth::check() ? Customer::where('user_id', Auth::id())->first() : null; // Kiểm tra đăng nhập
 
         return view("shopingcart.cart", compact('sliders', 'categorys', 'categorysLimit', 'products', 'newCart', 'customer'));
     }
 
     public function Addcart(Request $req, $id)
     {
-        $product = DB::table('products')->where('id', $id)->first();
+        $product = Product::find($id); // Sử dụng Model thay vì DB::table để có đầy đủ thuộc tính
         if ($product != null) {
             $oldCart = session('Cart') ? session('Cart') : null;
             $newCart = new Cart($oldCart);
@@ -69,7 +69,7 @@ class CartController extends Controller
         $sliders = Slider::latest()->get();
         $categorys = Category::where('parent_id', 0)->get();
         $categorysLimit = Category::where('parent_id', 0)->take(3)->get();
-        $customer = Customer::where('user_id', Auth::id())->first();
+        $customer = Auth::check() ? Customer::where('user_id', Auth::id())->first() : null; // Kiểm tra đăng nhập
         
         // Trả về view với dữ liệu mới
         return view('shopingcart.cart', compact('sliders', 'categorys', 'categorysLimit', 'products', 'newCart', 'customer'));
@@ -119,6 +119,11 @@ class CartController extends Controller
     $address = $request->input('address');
     $paymentMethod = $request->input('payment_method');
     
+    // Kiểm tra đăng nhập
+    if (!Auth::check()) {
+        return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để đặt hàng');
+    }
+    
     // Cập nhật thông tin khách hàng trong cơ sở dữ liệu
     $customer = Customer::updateOrCreate(
         ['user_id' => auth()->id()], // Điều kiện để tìm kiếm hoặc tạo mới khách hàng
@@ -163,6 +168,10 @@ class CartController extends Controller
 
     public function Punchorder()
     {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để xem đơn hàng');
+        }
+        
         $userId = Auth::id(); // Lấy ID người dùng hiện tại
         $orders = Order::with(['orderItems.product'])->latest()
             ->where('user_id', $userId) // Chỉ lấy đơn hàng của người dùng hiện tại

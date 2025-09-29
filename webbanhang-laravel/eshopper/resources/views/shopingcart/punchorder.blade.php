@@ -94,9 +94,13 @@
                                                     @foreach($order->orderItems as $index => $orderItem)
                                                     <tr>
                                                         <td>
-                                                            <img class="image_size" style="max-width: 140px; max-height: 200px; object-fit: cover;" src="{{ config('app.base_url') . $orderItem->product->feature_image_path }}" alt="{{ $orderItem->product->name }}">
+                                                            @if($orderItem->product && $orderItem->product->feature_image_path)
+                                                                <img class="image_size" style="width: 100px; height: 80px; object-fit: cover;" src="{{ url('http://127.0.0.1:8001' . $orderItem->product->feature_image_path) }}" alt="{{ $orderItem->product->name }}">
+                                                            @else
+                                                                <img class="image_size" style="width: 100px; height: 80px; object-fit: cover;" src="{{ asset('Eshopper/images/home/product1.jpg') }}" alt="No image">
+                                                            @endif
                                                         </td>
-                                                        <td>{{ $orderItem->product->name }}</td>
+                                                        <td>{{ $orderItem->product ? $orderItem->product->name : 'Sản phẩm không tồn tại' }}</td>
                                                         <td>{{ number_format($orderItem->price) }} VND</td>
                                                         <td>{{ $orderItem->quanty }}</td>
                                                         @if ($index === 0)

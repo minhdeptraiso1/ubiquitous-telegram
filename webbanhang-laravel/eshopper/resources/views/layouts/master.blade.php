@@ -13,6 +13,7 @@
     <link href="{{ asset('/Eshopper/css/price-range.css')}}" rel="stylesheet">
     <link href="{{ asset('/Eshopper/css/animate.css')}}" rel="stylesheet">
     <link href="{{ asset('/Eshopper/css/main.css')}}" rel="stylesheet">
+    <link href="{{ asset('/Eshopper/css/custom-product-images.css')}}" rel="stylesheet">
     @yield('css')
 </head>
 <body>
@@ -22,12 +23,41 @@
 @yield('content')
 @include('components.footer')
 
-<script src="{{ asset('/Eshopper/js/jquery.js')}}"></script>
-<script src="{{ asset('/Eshopper/js/bootstrap.min.js')}}"></script>
-<script src="{{ asset('/Eshopper/js/jquery.scrollUp.min.js')}}"></script>
-<script src="{{ asset('/Eshopper/js/price-range.js')}}"></script>
-<script src="{{ asset('/Eshopper/js/jquery.prettyPhoto.js')}}"></script>
-<script src="{{ asset('/Eshopper/js/main.js')}}"></script>
+<!-- jQuery CDN với fallback -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+    // Fallback nếu CDN fail
+    window.jQuery || document.write('<script src="{{ asset("/Eshopper/js/jquery.js") }}"><\/script>');
+    console.log('jQuery version:', typeof jQuery !== 'undefined' ? jQuery.fn.jquery : 'Not loaded');
+</script>
+
+<!-- Bootstrap 3.4.1 CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<!-- Error handling -->
+<script>
+    window.addEventListener('error', function(e) {
+        console.warn('JavaScript Error caught:', e.message, 'at', e.filename + ':' + e.lineno);
+    });
+    
+    // Safe script execution
+    $(document).ready(function() {
+        console.log('Document ready - DOM loaded');
+        
+        // Initialize any critical functionality here
+        try {
+            // Your initialization code
+        } catch(error) {
+            console.error('Initialization error:', error);
+        }
+    });
+</script>
+
+<!-- Load other scripts with error handling -->
+<script src="{{ asset('/Eshopper/js/jquery.scrollUp.min.js') }}"></script>
+<script src="{{ asset('/Eshopper/js/price-range.js') }}"></script>  
+<script src="{{ asset('/Eshopper/js/jquery.prettyPhoto.js') }}"></script>
+<script src="{{ asset('/Eshopper/js/main.js') }}"></script>
 
 <!-- JavaScript -->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>

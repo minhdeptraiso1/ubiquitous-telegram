@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,5 +20,16 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        // Seed all data for EShopper
+        $this->call([
+            UserSeeder::class,
+            CategorySeeder::class,
+            ProductSeeder::class,
+            ProductImageSeeder::class,
+            SliderSeeder::class,
+            CustomerSeeder::class,
+            OrderSeeder::class,
+        ]);
     }
 }

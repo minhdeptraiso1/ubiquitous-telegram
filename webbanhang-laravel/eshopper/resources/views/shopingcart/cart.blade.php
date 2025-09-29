@@ -100,7 +100,11 @@
                                                     @foreach(Session::get('Cart')->products as $item)
                                                         <tr>
                                                             <td class="cart_product">
-                                                                <img class="image_size" style="max-width: 140px; max-height: 200px; object-fit: cover;" src="{{ config('app.base_url') . $item['productInfo']->feature_image_path }}" alt="" />
+                                                                @if($item['productInfo']->feature_image_path)
+                                                                    <img class="image_size" style="width: 100px; height: 80px; object-fit: cover;" src="{{ url('http://127.0.0.1:8001' . $item['productInfo']->feature_image_path) }}" alt="{{ $item['productInfo']->name }}" />
+                                                                @else
+                                                                    <img class="image_size" style="width: 100px; height: 80px; object-fit: cover;" src="{{ asset('Eshopper/images/home/product1.jpg') }}" alt="No image" />
+                                                                @endif
                                                             </td>
                                                             <td class="cart_description">
                                                                 <h4>{{$item['productInfo']->name}}</h4>

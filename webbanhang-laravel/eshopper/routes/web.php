@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\FileImportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,3 +58,8 @@ Route::post('/submit-order', [CartController::class, 'submitOrder'])->name('shop
 Route::get('/detail/{id}', 'App\Http\Controllers\CategoryController@Detail')->name('product.category.productdetail');
 
 Route::post('/check-email', 'App\Http\Controllers\LoginController@checkEmail')->name('check-email');
+
+// File Import/Export Routes
+Route::post('/import-users', [FileImportController::class, 'importUsers'])->name('import.users');
+Route::get('/export-user-data', [FileImportController::class, 'exportUserData'])->name('export.user.data')->middleware('auth');
+Route::get('/download-sample-file', [FileImportController::class, 'downloadSampleFile'])->name('download.sample.file');

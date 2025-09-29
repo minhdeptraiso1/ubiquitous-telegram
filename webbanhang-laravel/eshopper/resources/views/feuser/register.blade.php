@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <!-- Load jQuery first -->
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!-- Then Bootstrap JS -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
     <script src="https://use.typekit.net/ayg4pcz.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>

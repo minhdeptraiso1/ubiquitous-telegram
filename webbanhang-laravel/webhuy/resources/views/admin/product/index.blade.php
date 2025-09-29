@@ -45,7 +45,11 @@
                 <td>{{number_format($productItem->price)}}</td>
                 <td>{{($productItem->quanty)}}</td>
                 <td>
-                    <img class="product_image_150_100" src="{{$productItem->feature_image_path	}}" alt="">
+                    @if($productItem->feature_image_path)
+                        <img class="product_image_150_100" src="{{ asset($productItem->feature_image_path) }}" alt="{{ $productItem->name }}" style="width: 100px; height: 80px; object-fit: cover;">
+                    @else
+                        <div class="no-image" style="width: 100px; height: 80px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 12px;">No Image</div>
+                    @endif
                 </td>
                 <td>{{optional($productItem->category)->name}}</td>
                 <td>{{ ($productItem->created_at)}}

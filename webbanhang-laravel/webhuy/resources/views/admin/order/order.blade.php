@@ -40,9 +40,13 @@
                                 <td>
                                     <ul>
                                         @foreach($order->orderItems as $orderItem)
-                                        <img class="product_order_image_150_100" src="{{ $orderItem->product->feature_image_path }}" alt="">
-                                        <li>Tên:{{ $orderItem->product->name }}</li>
-                                        <li>Số lượng:{{ $orderItem->quanty }}</li>
+                                        @if($orderItem->product && $orderItem->product->feature_image_path)
+                                            <img class="product_order_image_150_100" src="{{ asset($orderItem->product->feature_image_path) }}" alt="{{ $orderItem->product->name }}" style="width: 80px; height: 60px; object-fit: cover;">
+                                        @else
+                                            <img class="product_order_image_150_100" src="{{ asset('images/no-image.jpg') }}" alt="No image" style="width: 80px; height: 60px; object-fit: cover;">
+                                        @endif
+                                        <li>Tên: {{ $orderItem->product ? $orderItem->product->name : 'Sản phẩm không tồn tại' }}</li>
+                                        <li>Số lượng: {{ $orderItem->quanty }}</li>
                                         @endforeach
                                     </ul>
                                 </td>

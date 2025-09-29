@@ -7,7 +7,7 @@
                 <div class="single-products">
                    
                         <div class="productinfo text-center">
-                            <a href="{{ route('product.category.productdetail', ['id' => $product->id]) }}"><img src="{{config('app.base_url') . $product->feature_image_path}}" alt="" /></a>
+                            <a href="{{ route('product.category.productdetail', ['id' => $product->id]) }}"><img src="{{ $product->feature_image_path ? url('http://127.0.0.1:8001' . $product->feature_image_path) : asset('Eshopper/images/home/product1.jpg') }}" alt="{{ $product->name }}" /></a>
                             <h4 style="color: orange;">{{number_format($product->price)}} VND</h4>
                             <p>{{$product->name}}</p>
                             <a href="javascript:void(0);" onclick="Addcart({{$product->id}})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
