@@ -175,6 +175,43 @@
         .forgot-password:focus{
             color: rgb(12, 97, 33);
         }
+        .file-import-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .file-import-section h4 {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .btn-file-import {
+            background-color: #5cb85c;
+            color: white;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            font-size: 12px;
+            padding: 5px 10px;
+            height: auto;
+        }
+
+        .btn-file-sample {
+            background-color: #f0ad4e;
+            color: white;
+            font-size: 12px;
+            padding: 5px 10px;
+            height: auto;
+            margin-bottom: 5px;
+        }
+
+        .file-input-custom {
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
 
      
     </style>
@@ -208,10 +245,30 @@
                 <button class="btn btn-lg btn-primary" type="submit">Đăng ký</button>
                 <a href="{{route('feuser.login')}}" class="btn btn-primary btn-block">Tôi đã có tài khoản</a>
             </form>
+             <!-- File Import Section -->
+    <div class="file-import-section">
+        <h4><i class="glyphicon glyphicon-import"></i> Import Multiple Users</h4>
+        <form method="POST" action="{{ route('import.users') }}" enctype="multipart/form-data">
+            @csrf
+            <input type="file" name="import_file" accept=".txt" class="form-control file-input-custom" required>
+            <button type="submit" class="btn btn-file-import">
+                <i class="glyphicon glyphicon-upload"></i> Import Users
+            </button>
+            <a href="{{ route('download.sample.file') }}" class="btn btn-file-sample">
+                <i class="glyphicon glyphicon-download"></i> Download Sample File
+            </a>
+        </form>
+        <small class="text-muted">
+            <strong>File format:</strong> name=value, separated by lines, multiple users separated by "---"<br>
+            <strong>Required fields:</strong> name, email, password<br>
+            <strong>Optional fields:</strong> phone, address
+        </small>
+    </div>
         </div>
     </div>
     
     <script>
+        try{Typekit.load({ async: true });}catch(e){}
         $(document).ready(function() {
             $('#inputEmail').on('blur', function() {
                 var email = $(this).val();
